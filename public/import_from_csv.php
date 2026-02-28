@@ -25,45 +25,17 @@ if (!is_dir($uploadDir)) {
 // Baca CSV
 $handle = fopen($csvFile, "r");
 
-// Helper untuk menghapus BOM (Byte Order Mark) dari string
-function removeBOM($text) {
-    $bom = pack('H*','EFBBBF');
-    $text = preg_replace("/^$bom/", '', $text);
-    return $text;
-}
-
-// Baca Header dengan penanganan error yang lebih baik
-// Tambahkan parameter escape (kosong atau backslash) untuk PHP terbaru
-$header = fgetcsv($handle, 0, ",", "\"", "\\"); 
-
-if (!$header) {
-    die("Error: Could not read CSV header.");
-}
-
-echo "<pre>Detected Columns: " . print_r($header, true) . "</pre>";
-
 $totalProcessed = 0;
 $totalDownloaded = 0;
 $totalUpdated = 0;
 
-// Cari kolom URL dan Filename
-$urlIndex = -1;
-$filenameIndex = -1;
+// HARDCODE INDEX BERDASARKAN HASIL DEBUG
+// Kolom 2: File Name (ayam-pedaging-1.jpg)
+// Kolom 6: URL (https://...)
+$filenameIndex = 2;
+$urlIndex = 6;
 
-foreach ($header as $index => $colName) {
-    // Bersihkan nama kolom dari spasi/karakter aneh/BOM
-    $cleanColName = trim(removeBOM($colName));
-    
-    // Case-insensitive check
-    if (strcasecmp($cleanColName, 'URL') === 0) $urlIndex = $index;
-    if (strcasecmp($cleanColName, 'File Name') === 0) $filenameIndex = $index;
-}
-
-if ($urlIndex === -1 || $filenameIndex === -1) {
-    echo "<p style='color:red'>Error: CSV must have 'URL' and 'File Name' columns.</p>";
-    echo "<p>Please ensure your CSV uses comma (,) as delimiter.</p>";
-    die();
-}
+echo "<p>Using Hardcoded Indexes: Filename [$filenameIndex], URL [$urlIndex]</p>";
 
 while (($data = fgetcsv($handle, 0, ",", "\"", "\\")) !== FALSE) {
     // Pastikan baris memiliki jumlah kolom yang cukup
