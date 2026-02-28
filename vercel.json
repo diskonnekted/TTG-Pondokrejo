@@ -11,15 +11,15 @@
     },
     {
       "src": "public/index.php",
-      "use": "vercel-php@0.6.0"
+      "use": "vercel-php@0.7.1"
     },
     {
       "src": "public/admin/*.php",
-      "use": "vercel-php@0.6.0"
+      "use": "vercel-php@0.7.1"
     },
     {
       "src": "public/**/*.php",
-      "use": "vercel-php@0.6.0"
+      "use": "vercel-php@0.7.1"
     }
   ],
   "routes": [
