@@ -4,6 +4,9 @@
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/functions.php';
 
+// Fix line ending detection for Mac/Legacy CSVs
+ini_set('auto_detect_line_endings', true);
+
 set_time_limit(0);
 
 $pdo = connectDB();
@@ -149,6 +152,10 @@ while (($data = fgetcsv($handle, 0, ",", "\"", "\\")) !== FALSE) {
             $checkStmt->execute(["%$originalFilename%"]);
             $steps = $checkStmt->fetchAll();
             
+            if (empty($steps)) {
+                echo "<span style='color:gray'>No match found in DB for: $originalFilename</span><br>";
+            }
+
             foreach ($steps as $step) {
                 $newContent = preg_replace(
                     '/(src=["\'])([^"\']*' . preg_quote($originalFilename, '/') . ')(["\'])/i',
