@@ -38,8 +38,8 @@ require_once __DIR__ . '/../includes/header.php';
                 <p class="text-cornsilk/80 text-sm font-medium mb-1">Selamat Datang di</p>
                 <h1 class="text-3xl font-extrabold tracking-tight text-white">TTG Pondokrejo</h1>
             </div>
-            <div class="bg-white/20 p-2 rounded-full backdrop-blur-sm text-white">
-            <img src="<?php echo BASE_URL; ?>/assets/images/logo.png" alt="Logo TTG" class="w-10 h-10 object-contain">
+            <div class="bg-white/20 p-1 rounded-lg backdrop-blur-sm text-white">
+            <img src="<?php echo BASE_URL; ?>/assets/images/logo.png" alt="Logo TTG" class="w-12 h-auto object-contain">
         </div>
         </div>
 

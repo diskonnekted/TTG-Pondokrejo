@@ -44,7 +44,7 @@
     <div class="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
         <a href="<?php echo BASE_URL; ?>/index.php" class="text-xl font-bold text-primary flex items-center gap-2">
             <img src="<?php echo BASE_URL; ?>/assets/images/logo.png" alt="Logo TTG" class="h-8 w-auto">
-            <span class="hidden sm:inline">TTG Pondokrejo</span>
+            <span class="inline">TTG Pondokrejo</span>
         </a>
         <div class="flex gap-3">
              <a href="<?php echo BASE_URL; ?>/search.php" class="text-gray-500 hover:text-primary">
