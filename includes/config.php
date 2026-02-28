@@ -24,6 +24,30 @@ function connectDB() {
         // Check for Postgres URL (Vercel / Neon)
         $dbUrl = getenv('POSTGRES_URL') ?: getenv('DATABASE_URL');
         
+        // Check for MySQL (Shared Hosting / VPS)
+        // OPSI 1: Lewat Environment Variable (Disarankan untuk keamanan)
+        $mysqlHost = getenv('DB_HOST');
+        $mysqlUser = getenv('DB_USER');
+        $mysqlPass = getenv('DB_PASS');
+        $mysqlName = getenv('DB_NAME');
+
+        // OPSI 2: Hardcode (Jika hosting tidak support env vars)
+        // Hapus tanda komentar (//) di bawah ini dan isi sesuai data hosting Anda
+        /*
+        $mysqlHost = 'localhost';
+        $mysqlName = 'nama_database_anda';
+        $mysqlUser = 'username_database_anda';
+        $mysqlPass = 'password_database_anda';
+        */
+
+        if ($mysqlHost && $mysqlName) {
+            $dsn = "mysql:host=$mysqlHost;dbname=$mysqlName;charset=utf8mb4";
+            $pdo = new PDO($dsn, $mysqlUser, $mysqlPass);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            return $pdo;
+        }
+        
         if ($dbUrl) {
             $db = parse_url($dbUrl);
             

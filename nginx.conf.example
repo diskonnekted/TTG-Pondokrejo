@@ -1,0 +1,38 @@
+server {
+    listen 80;
+    server_name yourdomain.com;
+    root /var/www/yourdomain.com/public;
+
+    index index.php index.html;
+
+    # Serve static assets directly
+    location ~* \.(jpg|jpeg|gif|png|css|js|ico|xml|svg)$ {
+        access_log off;
+        log_not_found off;
+        expires 30d;
+    }
+
+    # Deny access to sensitive files/directories (just in case root is misconfigured)
+    location ~ ^/(includes|database|src)/ {
+        deny all;
+        return 403;
+    }
+
+    # Handle all requests via index.php
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    # PHP-FPM Configuration
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock; # Adjust PHP version as needed
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    # Deny access to hidden files
+    location ~ /\.ht {
+        deny all;
+    }
+}
