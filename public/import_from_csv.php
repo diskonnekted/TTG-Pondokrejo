@@ -43,8 +43,9 @@ while (($data = fgetcsv($handle, 0, ",", "\"", "\\")) !== FALSE) {
         continue;
     }
 
-    $url = trim($data[$urlIndex]);
-    $originalFilename = trim($data[$filenameIndex]);
+    // Bersihkan data dari Null Bytes dan whitespace
+    $url = trim(str_replace("\0", "", $data[$urlIndex]));
+    $originalFilename = trim(str_replace("\0", "", $data[$filenameIndex]));
     
     if (empty($url)) continue;
 
