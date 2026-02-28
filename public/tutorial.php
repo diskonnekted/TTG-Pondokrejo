@@ -125,8 +125,23 @@ require_once __DIR__ . '/../includes/header.php';
         <?php endif; ?>
 
         <!-- Description -->
-        <div class="mb-8 text-gray-700 leading-relaxed">
-            <p><?php echo nl2br($tutorial['description']); ?></p>
+        <div class="mb-8 text-gray-700 leading-loose prose prose-green max-w-none">
+            <?php 
+            // Membersihkan tag HTML yang tidak diinginkan tapi membiarkan formatting dasar
+            // Dan mengubah newlines menjadi paragraf yang rapi, bukan sekadar <br>
+            $content = $tutorial['description'];
+            
+            // Jika konten sudah mengandung tag HTML (seperti <p>), jangan gunakan nl2br
+            if (strpos($content, '<p>') !== false || strpos($content, '<br>') !== false) {
+                // Hapus multiple br/p kosong yang berlebihan
+                $content = preg_replace('/(<br\s*\/?>\s*){2,}/', '<br><br>', $content);
+                $content = preg_replace('/(<p>\s*<\/p>\s*){2,}/', '<p></p>', $content);
+                echo $content;
+            } else {
+                // Jika plain text, bungkus dalam paragraf
+                echo '<p>' . nl2br(htmlspecialchars($content)) . '</p>';
+            }
+            ?>
         </div>
 
         <!-- PDF Download -->
@@ -195,9 +210,18 @@ require_once __DIR__ . '/../includes/header.php';
                     </div>
                     <?php endif; ?>
 
-                    <p class="text-gray-600 text-sm mb-4 leading-relaxed">
-                        <?php echo nl2br($step['content']); ?>
-                    </p>
+                    <div class="text-gray-700 text-base mb-4 leading-loose space-y-4 prose prose-sm max-w-none">
+                        <?php 
+                        $stepContent = $step['content'];
+                        // Sama seperti deskripsi, bersihkan spasi berlebih
+                        if (strpos($stepContent, '<p>') !== false || strpos($stepContent, '<br>') !== false) {
+                            $stepContent = preg_replace('/(<br\s*\/?>\s*){2,}/', '<br>', $stepContent);
+                            echo $stepContent;
+                        } else {
+                            echo nl2br(htmlspecialchars($stepContent));
+                        }
+                        ?>
+                    </div>
 
                     <button @click="toggleStep(<?php echo $step['id']; ?>)" 
                             class="w-full py-2 rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2"
