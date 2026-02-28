@@ -10,10 +10,10 @@ $pdo = connectDB();
 
 echo "<h1>Starting Image Import from CSV...</h1>";
 
-$csvFile = __DIR__ . '/uploads/media-url.csv';
+$csvFile = __DIR__ . '/media-url.csv';
 
 if (!file_exists($csvFile)) {
-    die("Error: File uploads/media-url.csv not found.");
+    die("Error: File media-url.csv not found.");
 }
 
 // Folder tujuan
@@ -24,7 +24,23 @@ if (!is_dir($uploadDir)) {
 
 // Baca CSV
 $handle = fopen($csvFile, "r");
-$header = fgetcsv($handle); // Skip header row
+
+// Helper untuk menghapus BOM (Byte Order Mark) dari string
+function removeBOM($text) {
+    $bom = pack('H*','EFBBBF');
+    $text = preg_replace("/^$bom/", '', $text);
+    return $text;
+}
+
+// Baca Header dengan penanganan error yang lebih baik
+// Tambahkan parameter escape (kosong atau backslash) untuk PHP terbaru
+$header = fgetcsv($handle, 0, ",", "\"", "\\"); 
+
+if (!$header) {
+    die("Error: Could not read CSV header.");
+}
+
+echo "<pre>Detected Columns: " . print_r($header, true) . "</pre>";
 
 $totalProcessed = 0;
 $totalDownloaded = 0;
@@ -35,15 +51,26 @@ $urlIndex = -1;
 $filenameIndex = -1;
 
 foreach ($header as $index => $colName) {
-    if (strcasecmp(trim($colName), 'URL') === 0) $urlIndex = $index;
-    if (strcasecmp(trim($colName), 'File Name') === 0) $filenameIndex = $index;
+    // Bersihkan nama kolom dari spasi/karakter aneh/BOM
+    $cleanColName = trim(removeBOM($colName));
+    
+    // Case-insensitive check
+    if (strcasecmp($cleanColName, 'URL') === 0) $urlIndex = $index;
+    if (strcasecmp($cleanColName, 'File Name') === 0) $filenameIndex = $index;
 }
 
 if ($urlIndex === -1 || $filenameIndex === -1) {
-    die("Error: CSV must have 'URL' and 'File Name' columns.");
+    echo "<p style='color:red'>Error: CSV must have 'URL' and 'File Name' columns.</p>";
+    echo "<p>Please ensure your CSV uses comma (,) as delimiter.</p>";
+    die();
 }
 
-while (($data = fgetcsv($handle)) !== FALSE) {
+while (($data = fgetcsv($handle, 0, ",", "\"", "\\")) !== FALSE) {
+    // Pastikan baris memiliki jumlah kolom yang cukup
+    if (!isset($data[$urlIndex]) || !isset($data[$filenameIndex])) {
+        continue;
+    }
+
     $url = trim($data[$urlIndex]);
     $originalFilename = trim($data[$filenameIndex]);
     
