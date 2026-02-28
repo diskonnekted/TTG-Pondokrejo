@@ -8,9 +8,10 @@ define('SITE_NAME', getenv('SITE_NAME') ?: 'TTG Pondokrejo');
 
 // Error reporting (Turn off for production if desired)
 if (getenv('VERCEL')) {
-    ini_set('display_errors', 0);
-    ini_set('display_startup_errors', 0);
-    error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+    // TEMPORARY DEBUGGING: Enable errors on Vercel
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 } else {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
