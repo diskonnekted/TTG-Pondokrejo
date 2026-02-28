@@ -191,14 +191,14 @@ require_once __DIR__ . '/../includes/header.php';
             <ul class="space-y-3">
                 <?php foreach($materials as $mat): ?>
                 <li class="flex items-start gap-3 text-sm text-gray-700 border-b border-blue-100 pb-2 last:border-0 last:pb-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" style="width: 20px; height: 20px;">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <div>
                         <span class="font-semibold block"><?php echo $mat['name']; ?> (<?php echo $mat['quantity']; ?>)</span>
                         <?php if($mat['local_source']): ?>
                             <span class="text-xs text-blue-600 block mt-0.5 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1" style="width: 12px; height: 12px;">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                                 </svg>
