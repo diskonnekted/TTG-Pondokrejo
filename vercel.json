@@ -11,15 +11,24 @@
     },
     {
       "src": "public/index.php",
-      "use": "vercel-php@0.7.1"
+      "use": "vercel-php@0.7.1",
+      "config": {
+        "includeFiles": ["includes/**", "database/**"]
+      }
     },
     {
       "src": "public/admin/*.php",
-      "use": "vercel-php@0.7.1"
+      "use": "vercel-php@0.7.1",
+      "config": {
+        "includeFiles": ["includes/**", "database/**"]
+      }
     },
     {
       "src": "public/**/*.php",
-      "use": "vercel-php@0.7.1"
+      "use": "vercel-php@0.7.1",
+      "config": {
+        "includeFiles": ["includes/**", "database/**"]
+      }
     }
   ],
   "routes": [
