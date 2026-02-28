@@ -39,8 +39,8 @@ require_once __DIR__ . '/../includes/header.php';
                 <h1 class="text-3xl font-extrabold tracking-tight text-white">TTG Pondokrejo</h1>
             </div>
             <div class="bg-white/20 p-2 rounded-full backdrop-blur-sm text-white">
-                <i class="fas fa-leaf text-xl"></i>
-            </div>
+            <img src="<?php echo BASE_URL; ?>/assets/images/logo.png" alt="Logo TTG" class="w-10 h-10 object-contain">
+        </div>
         </div>
 
         <p class="mb-6 text-cornsilk/90 text-sm leading-relaxed max-w-xs">
