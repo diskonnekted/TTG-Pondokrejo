@@ -70,7 +70,7 @@ require_once __DIR__ . '/../includes/header.php';
         <?php foreach($categories as $cat): ?>
         <a href="category.php?id=<?php echo $cat['id']; ?>" class="snap-start flex-shrink-0 flex flex-col items-center group">
             <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-gray-500 shadow-sm border border-gray-100 group-hover:border-olive-leaf group-hover:bg-cornsilk group-hover:text-olive-leaf transition-all duration-300 p-3">
-                <img src="<?php echo getCategoryIcon($cat['name']); ?>" class="w-full h-full object-contain filter group-hover:brightness-110 transition">
+                <?php echo getCategoryHeroicon($cat['name']); ?>
             </div>
             <span class="text-xs font-medium text-gray-600 mt-2 group-hover:text-olive-leaf transition-colors"><?php echo $cat['name']; ?></span>
         </a>
