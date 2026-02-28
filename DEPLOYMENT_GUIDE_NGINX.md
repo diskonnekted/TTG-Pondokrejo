@@ -38,16 +38,28 @@ Pastikan server Anda sudah terinstall:
     chmod -R 777 /var/www/public_html/public/uploads
     ```
 
-### Opsi B: Menggunakan GitHub Actions (Otomatis Deploy)
-Saya sudah menyiapkan file workflow di `.github/workflows/deploy.yml`. Agar otomatis deploy setiap kali Anda push ke GitHub:
+### Opsi B: Menggunakan Git Pull (Standar)
+Jika Anda ingin melakukan update manual dari server:
 
-1.  Buka repository GitHub Anda -> **Settings** -> **Secrets and variables** -> **Actions**.
-2.  Tambahkan **New repository secret**:
-    *   `SERVER_HOST`: IP Address VPS Anda (misal: 103.x.x.x).
-    *   `SERVER_USER`: Username SSH (misal: root).
-    *   `SERVER_PASSWORD`: Password SSH Anda (atau gunakan `SERVER_KEY` untuk private key).
-    *   `SERVER_PORT`: Port SSH (biasanya 22).
-3.  Setiap kali Anda push ke branch `main`, GitHub akan otomatis mengupload file terbaru ke server.
+1.  Masuk ke server via SSH.
+2.  Masuk ke folder project:
+    ```bash
+    cd /var/www/public_html
+    ```
+3.  Jalankan perintah pull:
+    ```bash
+    git pull origin main
+    ```
+    *Jika ada konflik file config, Anda bisa stash dulu:*
+    ```bash
+    git stash
+    git pull origin main
+    git stash pop
+    ```
+4.  Pastikan permission folder upload tetap benar:
+    ```bash
+    chmod -R 777 public/uploads
+    ```
 
 ### Opsi C: Upload Manual (File Manager/SFTP)
 1.  Upload semua file project ke folder `public_html` di server Anda.
